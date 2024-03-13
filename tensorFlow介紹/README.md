@@ -20,11 +20,11 @@
 - 安裝tendorFlow的套件至python
 
 ```
-#支援GPU
+#支援CPU
 $ pip install tensorflow
 
-#僅支援CPU
-$ pip install tensorflow-cpu
+#僅支援GPU
+$ pip install tensorflow-gpu
 
 #測試版本
 import tensorflow as tf
