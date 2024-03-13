@@ -12,5 +12,5 @@ ys = np.array([-3.0, -1.0, 1.0, 3.0, 5.0, 7.0], dtype=float)
 
 model.fit(xs,ys, epochs=500)
 
-export_dir = 'saved_model'
+export_dir = 'saved_model/1'
 tf.saved_model.save(model, export_dir)

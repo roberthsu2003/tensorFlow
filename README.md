@@ -1,4 +1,9 @@
 # machine_learning
+
+```
+需使用miniconda建立虛擬環境
+```
+
 ## 建立模型
 ### [TensorFlow介紹](./tensorFlow介紹)
 ### 電腦視覺介紹

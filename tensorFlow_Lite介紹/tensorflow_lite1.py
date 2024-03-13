@@ -4,7 +4,7 @@ import tensorflow as tf
 import numpy as np
 import os
 
-export_dir = 'saved_model'
+export_dir = 'saved_model/1'
 converter = tf.lite.TFLiteConverter.from_saved_model(export_dir)
 #mac 要建立這個才可以,不然無法轉換
 #converter.optimizations = [tf.lite.Optimize.DEFAULT]
