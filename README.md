@@ -18,7 +18,7 @@
 ### 使用卷積和迴圈方式建立串例模型
 
 ## 使用模型
-### TensorFlow Lite
+### [TensorFlow Lite](./tensorFlow_Lite介紹)
 ### TensorFlow Lite For Android Apps
 ### TensorFlow Lite For iOS App
 ### TensorFlow.js
