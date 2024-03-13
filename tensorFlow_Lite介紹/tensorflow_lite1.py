@@ -7,12 +7,12 @@ import os
 export_dir = 'saved_model'
 converter = tf.lite.TFLiteConverter.from_saved_model(export_dir)
 #mac 要建立這個才可以,不然無法轉換
-converter.optimizations = [tf.lite.Optimize.DEFAULT]
-converter.target_spec.supported_ops = [
-tf.lite.OpsSet.TFLITE_BUILTINS, # enable TensorFlow Lite ops.
-tf.lite.OpsSet.SELECT_TF_OPS # enable TensorFlow ops.
-]
-os.environ['MLIR_CRASH_REPRODUCER_DIRECTORY'] = "MLIR_CRASH"
+#converter.optimizations = [tf.lite.Optimize.DEFAULT]
+#converter.target_spec.supported_ops = [
+#tf.lite.OpsSet.TFLITE_BUILTINS, # enable TensorFlow Lite ops.
+#tf.lite.OpsSet.SELECT_TF_OPS # enable TensorFlow ops.
+#]
+#os.environ['MLIR_CRASH_REPRODUCER_DIRECTORY'] = "MLIR_CRASH"
 tflite_model = converter.convert()
 
 import pathlib
