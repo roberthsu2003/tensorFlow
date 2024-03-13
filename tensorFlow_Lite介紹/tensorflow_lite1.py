@@ -14,7 +14,6 @@ tf.lite.OpsSet.SELECT_TF_OPS # enable TensorFlow ops.
 ]
 os.environ['MLIR_CRASH_REPRODUCER_DIRECTORY'] = "MLIR_CRASH"
 tflite_model = converter.convert()
-'''
 
 import pathlib
 tflite_model_file = pathlib.Path('model.tflite')
@@ -32,5 +31,3 @@ interpreter.set_tensor(input_details[0]['index'],to_predict)
 interpreter.invoke()
 tflite_results = interpreter.get_tensor(output_details[0]['index'])
 print(tflite_results)
-
-'''
