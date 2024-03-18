@@ -6,7 +6,7 @@
 
 ## 建立模型
 ### [TensorFlow介紹](./tensorFlow介紹)
-### 電腦視覺介紹
+### 電腦視覺介紹(./computer_vision/)
 ### 偵測影像特徵
 ### TensorFlow公開資料集
 ### 自然語言處理
