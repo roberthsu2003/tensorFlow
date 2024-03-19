@@ -19,8 +19,8 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "conda init && conda update conda && conda create --name tensorflow python=3.10 && conda activate tensorflow"
+	// Use 'postCreateCommand' to run commands after the container is created.	
+	"runArgs":["--name=tensorFlow"]
 
 	// Configure tool-specific properties.
 	// "customizations": {},
