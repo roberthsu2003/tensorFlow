@@ -262,7 +262,7 @@ interpreter.allocate_tensors()
 	- 數據類型(dtype)
 	- 量化參數(如果有的話)
 - 檢查詳細資訊
-	1. 使用print直接查看
+	- 使用print直接查看
 
 ```python
 import tensorflow as tf
@@ -284,8 +284,79 @@ print(output_details)
 [{'name': 'StatefulPartitionedCall_1:0', 'index': 3, 'shape': array([1, 1], dtype=int32), 'shape_signature': array([-1,  1], dtype=int32), 'dtype': <class 'numpy.float32'>, 'quantization': (0.0, 0), 'quantization_parameters': {'scales': array([], dtype=float32), 'zero_points': array([], dtype=int32), 'quantized_dimension': 0}, 'sparsity_parameters': {}}]
 ```
 - 
-	1. 使用print直接查看
+	- 查看特定屬性
 
+```python
+import tensorflow as tf
+# Load the TFLite model
+interpreter = tf.lite.Interpreter(model_path='linear_model.tflite')
+interpreter.allocate_tensors()
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
+# 檢查輸入張量的形狀和類型
+print("輸入張量形狀:", input_details[0]['shape'])
+print("輸入張量類型:", input_details[0]['dtype'])
+
+# 檢查輸出張量的形狀和類型
+print("輸出張量形狀:", output_details[0]['shape'])
+print("輸出張量類型:", output_details[0]['dtype'])
+
+#====output====
+輸入張量形狀: [1 1]
+輸入張量類型: <class 'numpy.float32'>
+輸出張量形狀: [1 1]
+輸出張量類型: <class 'numpy.float32'>
+```
+
+4. 轉換資料成為符合input_details內'shape'所符合的資料
+
+```python
+import tensorflow as tf
+import numpy as np
+interpreter = tf.lite.Interpreter(model_path='linear_model.tflite')
+interpreter.allocate_tensors()
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
+# 檢視轉換過程
+input_value = [1.0]
+print("原始輸入:", input_value)
+print("形狀:", input_details[0]['shape'])
+converted = np.array(input_value, dtype=np.float32)
+print("轉換後:", converted)
+reshaped = converted.reshape(input_details[0]['shape'])
+print("重塑後:", reshaped)
+
+#===output===
+原始輸入: [1.0]
+形狀: [1 1]
+轉換後: [1.]
+重塑後: [[1.]]
+```
+
+5. 設定interpreter輸入的張量
+	- set_tensor() 將準備好的輸入數據分配給模型
+	- input_details[0]['index'] 指定輸入張量的位置
+
+```python
+interpreter.set_tensor(input_details[0]['index'], input_data)
+```
+
+6. 模型執行推論
+- invoke() 觸發模型執行推論計算
+- 使用已設置的輸入數據進行運算
+- 計算結果存儲在輸出張量中
+
+```python
+interpreter.invoke()
+```
+
+7. 取出輸出的張量
+
+```python
+output_data = interpreter.get_tensor(output_details[0]['index'])
+```
+
+**完整的程式碼**
 
 ```python
 import tensorflow as tf
@@ -334,3 +405,35 @@ tflite_predict = load_and_use_tflite(tflite_model_path)
 test_input = [10.0]
 print("TFLite Model Prediction:", tflite_predict(test_input))
 ```
+
+**為什麼使用內部函式**
+
+1. 封裝性
+	- 內部函數可以讀取外部函數的變數（closure）
+	- 可以直接使用外部函式的變數如interpreter, input_details和output_details
+	- 避免這些變數被全域污染
+
+2. 狀態保持
+ - interpreter 的狀態被保持在closure中
+ - 不需要每次預測時重新載入模型
+ - 提高執行效率
+
+3. 介面簡化
+- 使用者只需要關注輸入數據
+- 複雜的模型操作被隱藏在內部
+
+4. 記憶體效率
+- 模型只需要載入一次
+- 避免重複分配記憶體
+- 特別適合需要多次預測的場景
+
+5. 最佳實踐
+**這種設計模式(Factory Pattern)特別適合**
+- 需要初始化複雜對象
+- 需要保持狀態
+- 希望提供簡單介面
+- 需要封狀實作細節
+
+
+
+
