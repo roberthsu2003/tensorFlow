@@ -240,6 +240,52 @@ convert_to_tflite(model, tflite_model_path)
 
 
 - **使用模型(using_model)**
+1. 建立TFLite interpreter(解譯器)
+	- 解釋器負責載入和執行模型
+
+2. 分配tensor(張量)需要的記憶體
+	- allocate_tensors() 為模型的所有張量分配記憶體空間
+	- 這是在使用模型進行預測前的必要步驟
+	- 確保模型有足夠的記憶體來存儲計算過程中的中間結果
+
+```python
+# Load the TFLite model
+interpreter = tf.lite.Interpreter(model_path=tflite_model_path)
+interpreter.allocate_tensors()
+```
+
+3. **獲取模型的輸入和輸出張量的詳細資訊**
+- input_details和output_details相關資訊,包括:
+	- 張量名稱(name)
+	- 張量索引(index)
+	- 張量形狀(shape)
+	- 數據類型(dtype)
+	- 量化參數(如果有的話)
+- 檢查詳細資訊
+	1. 使用print直接查看
+
+```python
+import tensorflow as tf
+# Load the TFLite model
+interpreter = tf.lite.Interpreter(model_path='linear_model.tflite')
+interpreter.allocate_tensors()
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
+print("輸入張量詳情:")
+print(input_details)
+print("\n輸出張量詳情:")
+print(output_details)
+
+#====output====
+輸入張量詳情:
+[{'name': 'serving_default_keras_tensor:0', 'index': 0, 'shape': array([1, 1], dtype=int32), 'shape_signature': array([-1,  1], dtype=int32), 'dtype': <class 'numpy.float32'>, 'quantization': (0.0, 0), 'quantization_parameters': {'scales': array([], dtype=float32), 'zero_points': array([], dtype=int32), 'quantized_dimension': 0}, 'sparsity_parameters': {}}]
+
+輸出張量詳情:
+[{'name': 'StatefulPartitionedCall_1:0', 'index': 3, 'shape': array([1, 1], dtype=int32), 'shape_signature': array([-1,  1], dtype=int32), 'dtype': <class 'numpy.float32'>, 'quantization': (0.0, 0), 'quantization_parameters': {'scales': array([], dtype=float32), 'zero_points': array([], dtype=int32), 'quantized_dimension': 0}, 'sparsity_parameters': {}}]
+```
+
+	1. 使用print直接查看
+
 
 ```python
 import tensorflow as tf
