@@ -1,10 +1,9 @@
 ## tensorFlow介紹
 
-
 ### 什麼是機器學習
--透過資料和結果,建立規則(演算法)
+-透過資料和結果,建立規則(演算法)
 ### 傳統程式語言的限制
-- 使用判斷和迴圈建立演算法
+- 使用判斷和迴圈建立非常複雜的演算法
 - 例如自動汽車要有非常龐大的演算法
 ### 什麼是TensorFlow
 - TensorFlow是一個建立機器學習模型的開放平台
@@ -18,17 +17,21 @@
 1. 使用已經內建神經網路的評估器,如Keras
 2. 提供cpu,gpu或tpu的硬體來做訓練
 3. 提供測試用的資料,可以快速透過TensorFlow Data Service 取得學習用的資料
-4. 利用TensorFlow Lite,TensorFlow.js部署在不用的系統(web,cloud,mobile,embedded)
+4. 利用TensorFlow Lite,TensorFlow.js部署在不同的系統(web,cloud,mobile,embedded)
+
 ### 使用TensorFlow
 - 使用vscode,pycharm或colab的IDE開發環境
 - 安裝tendorFlow的套件至python
 
 ```
-#支援CPU
+#最新版的pip
+pip install --upgrade pip
+
+#穩定最新版
 $ pip install tensorflow
 
-#僅支援GPU
-$ pip install tensorflow-gpu
+#不穩定最新版
+pip install tf-nightly
 
 #測試版本
 import tensorflow as tf
@@ -52,7 +55,7 @@ Python 3.9.21
 ```
 
 ```bash
-pip install tensorflow
+pip install tf-nightly
 ```
 
 
