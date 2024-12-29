@@ -289,7 +289,7 @@ model.fit(train_images, train_labels, epochs=50,callbacks=callbacks)
 1875/1875 ━━━━━━━━━━━━━━━━━━━━ 2s 1ms/step - accuracy: 0.9515 - loss: 0.1296
 ```
 
-## 轉換為tflite
+## 轉換為tflite(create_model.py)
 
 ```python
 import tensorflow as tf
@@ -345,7 +345,7 @@ convert_to_tflite(model,tflite_model_path)
 
 ```
 
-## 建立streamlit介面
+## 建立streamlit介面(interface.py)
 
 - pip install streamlit
 - pip install streamlit-clickable-images
