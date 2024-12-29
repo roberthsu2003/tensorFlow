@@ -57,6 +57,8 @@ convert_to_tflite(model, tflite_model_path)
 
 **評估模型**
 
+![](./images/output.png)
+
 ```python
 import tensorflow as tf
 import numpy as np

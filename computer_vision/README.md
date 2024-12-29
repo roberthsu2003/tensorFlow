@@ -296,3 +296,5 @@ model.fit(train_images, train_labels, epochs=50,callbacks=callbacks)
 
 
 
+
+
