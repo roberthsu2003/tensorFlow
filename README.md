@@ -10,7 +10,7 @@
 
 ### [2元一次方程式的訓練](./linear_regression1/)
 ### [電腦視覺介紹](./computer_vision/)
-### 偵測影像特徵
+### [偵測影像特徵](./detecting_features)
 ### TensorFlow公開資料集
 ### 自然語言處理
 ### Making Sentiment Programmable Using Embeddings
