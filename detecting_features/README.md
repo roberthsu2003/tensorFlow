@@ -42,3 +42,73 @@ Pooling
 
 
 ![](./images/pic5.png)
+
+## 使用卷積建構模型:
+
+```python
+import tensorflow as tf
+data = tf.keras.datasets.fashion_mnist
+
+(training_images, training_labels), (test_images, test_labels) = data.load_data()
+# 先改變training_images和traingin_labels的維度
+# training_images.shape -> (60000,28,28)
+training_images = training_images.reshape(60000,28,28,1)
+training_images = training_images / 255.0
+test_images = test_images.reshape(10000, 28, 28, 1)
+test_images = test_images / 255.0
+
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Conv2D(64,(3,3),
+                           activation='relu',
+                           input_shape=(28, 28, 1)),
+    tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.Conv2D(64,(3,3),activation='relu'),
+    tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation=tf.nn.relu),
+    tf.keras.layers.Dense(10, activation=tf.nn.softmax)
+])
+
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(training_images, training_labels, epochs=50)
+model.evaluate(test_images, test_labels)
+
+#====output====
+1875/1875 ━━━━━━━━━━━━━━━━━━━━ 11s 6ms/step - accuracy: 0.9945 - loss: 0.0187
+Epoch 50/50
+1875/1875 ━━━━━━━━━━━━━━━━━━━━ 11s 6ms/step - accuracy: 0.9964 - loss: 0.0123
+313/313 ━━━━━━━━━━━━━━━━━━━━ 1s 2ms/step - accuracy: 0.9099 - loss: 0.8568
+
+-------
+[0.841273844242096, 0.9142000079154968]
+```
+
+## 檢測模型
+
+```python
+model.summary()
+```
+
+![](./images/pic6.png)
+
+- **第1行output shape(26x26x64)**
+
+	26的原因是套用過濾器時,使用3*3,圖片4周的1像素會被丟棄,如果使用5x5過濾器4周的2個像素會被丟棄,就成為24x24.如下圖所視
+	
+![](./images/pic7.png)
+
+- **第2行的pooling層**
+
+	由於使用(2x2),所以該層會變為(13x13)
+	
+- **第3行的卷積層**
+
+一樣使用(3x3)過濾器,變為(11x11)
+
+- **第4行的pooling層**
+
+使用(2x2),所以該層會變為(5x5)
+
